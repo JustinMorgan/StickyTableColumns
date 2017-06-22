@@ -128,7 +128,7 @@
 
     <script>
       (function() {
-        function stickifyFirstColumn(table) {
+        function normalizeHeights(table) {
           let rows = [].slice.apply(table.querySelectorAll("tr"));
           rows.forEach(tr => {
             let cells = [].slice.apply(tr.children).filter(cell => !(cell.rowSpan > 1));
@@ -147,7 +147,7 @@
           });
         }
         let table = document.getElementsByTagName("table")[0];
-        // stickifyFirstColumn(table);
+        normalizeHeights(table);
       })()
     </script>
   </body>
