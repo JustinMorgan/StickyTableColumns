@@ -131,10 +131,10 @@
         function stickifyFirstColumn(table) {
           let rows = [].slice.apply(table.querySelectorAll("tr"));
           rows.forEach(tr => {
-            let cells = [].slice.apply(tr.children);
+            let cells = [].slice.apply(tr.children).filter(cell => !(cell.rowSpan > 1));
             let cellHeights = cells.map(c => c.clientHeight);
             let rowHeight = Math.max.apply(null, cellHeights);
-            cells.forEach((cell, i) => {
+            cells.forEach(cell => {
               let cellStyle = cell.currentStyle || window.getComputedStyle(cell);
               let offsets = [
                 cellStyle.paddingBottom, 
@@ -143,11 +143,11 @@
                 cellStyle.borderTopWidth
               ];
               cell.style.height = `calc(${rowHeight + 1}px - ${offsets.join(" - ")})`;
-            })
+            });
           });
         }
         let table = document.getElementsByTagName("table")[0];
-        stickifyFirstColumn(table);
+        // stickifyFirstColumn(table);
       })()
     </script>
   </body>
