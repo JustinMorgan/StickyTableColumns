@@ -128,31 +128,26 @@
 
     <script>
       (function() {
-        function rowHeight(tr) {
-          var th = tr.children[0];
-          var cells = [].slice.apply(tr.children);
-          var heights = cells.map(function(c) {return c.clientHeight});
-          return Math.max.apply(null, heights);
-        }
-        function stickifyFirstColumn(table, cellPadding, cellBorder) {
-          var rows = [].slice.apply(table.querySelectorAll("tr"));
-          rows.forEach(function(tr) {
-            var clientHeight = rowHeight(tr);
-            var padding = cellPadding || 0;
-            var border = cellBorder || 0;
-            var height = clientHeight - 2 * padding - border;
-            var cells = [].slice.apply(tr.children);
-            cells.forEach(function(cell) {
-              Object.assign(cell.style, {
-                height: height + "px",
-                padding: padding + "px",
-                "border-width": border + "px"
-              })
+        function stickifyFirstColumn(table) {
+          let rows = [].slice.apply(table.querySelectorAll("tr"));
+          rows.forEach(tr => {
+            let cells = [].slice.apply(tr.children);
+            let cellHeights = cells.map(c => c.clientHeight);
+            let rowHeight = Math.max.apply(null, cellHeights);
+            cells.forEach((cell, i) => {
+              let cellStyle = cell.currentStyle || window.getComputedStyle(cell);
+              let offsets = [
+                cellStyle.paddingBottom, 
+                cellStyle.paddingTop, 
+                cellStyle.borderBottomWidth,
+                cellStyle.borderTopWidth
+              ];
+              cell.style.height = `calc(${rowHeight + 1}px - ${offsets.join(" - ")})`;
             })
           });
         }
-        var table = document.getElementsByTagName("table")[0];
-        stickifyFirstColumn(table, 10, 1);
+        let table = document.getElementsByTagName("table")[0];
+        stickifyFirstColumn(table);
       })()
     </script>
   </body>
