@@ -129,11 +129,14 @@
     <script>
       (function() {
         function normalizeHeights(table) {
-          let rows = [].slice.apply(table.querySelectorAll("tr"));
-          rows.forEach(tr => {
-            let cells = [].slice.apply(tr.children).filter(cell => !(cell.rowSpan > 1));
+          let rows = [].slice.apply(table.rows);
+
+          rows.forEach(row => {
+            let cells = [].slice.apply(row.cells);
+            cells = cells.filter(cell => !(cell.rowSpan > 1));
             let cellHeights = cells.map(c => c.clientHeight);
             let rowHeight = Math.max.apply(null, cellHeights);
+            
             cells.forEach(cell => {
               let cellStyle = cell.currentStyle || window.getComputedStyle(cell);
               let offsets = [
