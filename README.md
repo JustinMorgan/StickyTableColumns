@@ -1,4 +1,4 @@
-# StickyTableColumns
+# Sticky HTML Table Columns
 
 This is a proof-of-concept for an HTML `table` with a sticky first column. The horizontal scrollbar starts at the second column, and the "sticky" first column stays in place as the user scrolls through the table.
 
