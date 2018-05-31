@@ -16,6 +16,9 @@ column:
 .scroll {
   overflow-x: scroll;
   overflow-y: visible;
+
+  /* will be calculated dynamically in the JS */
+  /* margin-left: 141px; */
 }
 table.stickify {
   table-layout: fixed;
