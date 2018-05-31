@@ -1,60 +1,29 @@
+/*************************************************************
+CSS portion of "sticky" behavior
 
-html, body { 
-  height: 100%; 
-  font-family: sans-serif; 
-  -webkit-text-size-adjust: 100%; 
-  -ms-text-size-adjust: 100%;
-}
-body { 
-  margin: 50px; 
-}
+This does most of the work in "stickifying" the table's header
+column:
+- Float the cells with position:absolute
+- Offset the remaining cells so they aren't hidden under the 
+  floating column
+- Envelop the non-floating columns in a box of fixed width,
+  enable horizontal scrolling, and ensure that the scroll bar
+  doesn't extend beneath the floating column
+*************************************************************/    
 .wrap {
   position: relative;
 }
 .scroll {
-  margin-left: 141px;
   overflow-x: scroll;
   overflow-y: visible;
-  width: 300px;
-  border-right: 1px solid #DDEFEF;
 }
-table {
-  border: none;
-  border-right: solid 1px #DDEFEF;
-  border-collapse: separate;
-  border-spacing: 0;
-  font: normal 13px Arial, sans-serif;
+table.stickify {
   table-layout: fixed;
   width: 1px;
+  visibility: hidden;
 }
-table thead th {
-  background-color: #DDEFEF;
-  border: none;
-  color: #336B6B;
-  padding: 10px;
-  text-align: left;
-  text-shadow: 1px 1px 1px #fff;
-  white-space: nowrap;
-}
-table tbody th {
-  background-color: #DDEFEF;
-  border: 1px solid #fff;
-  color: #336B6B;
-  padding: 10px;
-  text-align: left;
-  text-shadow: 1px 1px 1px #fff;
+table.stickify tbody th {
   left: 0;
   position: absolute;
   top: auto;
-  width: 120px;
-  vertical-align: top;
-  box-shadow: 2px 2px 1px #999;
-}
-table tbody td {
-  border-top: solid 1px #DDEFEF;
-  color: #333;
-  padding: 10px;
-  text-shadow: 1px 1px 1px #fff;
-  vertical-align: top;
-  width: 120px;
 }

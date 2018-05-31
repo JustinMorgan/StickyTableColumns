@@ -7,12 +7,57 @@
     <title>Sticky Table Columns | Proof-of-Concept</title>
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <style>
+      /*************************************************************
+      Style rules unrelated to "sticky" behavior, just here to make
+      the page look pretty
+      *************************************************************/    
+      html, body { 
+        height: 100%; 
+        font-family: sans-serif; 
+        -webkit-text-size-adjust: 100%; 
+        -ms-text-size-adjust: 100%;
+      }
+      body { 
+        margin: 50px; 
+      }
+      .scroll {
+        border-right: 1px solid #DDEFEF;
+        width: 400px;
+      }
+      table {
+        border: none;
+        border-collapse: separate;
+        border-spacing: 0;
+        font: normal 13px Arial, sans-serif;
+      }
+      th, td {
+        border: none;        
+        border-top: solid 1px;
+        border-left: solid 1px;
+        text-shadow: 1px 1px 1px #fff;
+        text-align: left;
+        vertical-align: top;
+        padding: 10px;
+        width: 120px;
+      }
+      th {
+        background-color: #DDEFEF;
+        border-color: #fff;
+        color: #336B6B;
+        box-shadow: 2px 2px 1px #999;
+      }
+      td {
+        border-color: #DDEFEF;
+        color: #333;
+      }
+    </style>
   </head>
 
   <body>
-    <div class="wrap">
-      <div class="scroll">
-        <table>
+    <!-- <div class="wrap"> -->
+      <!-- <div class="scroll"> -->
+        <table class="stickify">
           <tbody>
             <tr>
               <th>Lorem ipsum dolor sit amet, consectetur</th>
@@ -69,8 +114,8 @@
             </tr>
           </tbody>
         </table>
-      </div>
-    </div>
+      <!-- </div> -->
+    <!-- </div> -->
 
     <script src="sticky.js"></script>
   </body>
