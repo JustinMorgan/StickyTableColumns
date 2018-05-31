@@ -1,4 +1,4 @@
-(function() {
+let stickify = (function() {
   //Helper function to wrap an element in another one
   function wrap(el, wrapper) {
     el.parentNode.insertBefore(wrapper, el);
@@ -88,11 +88,16 @@
     });
   }
   
+  return function(tables) {
+    [].forEach.call(tables, table => {
+      createScrollBox(table);
+      normalizeRowHeights(table);
+      table.style.visibility = "inherit";
+    });
+  };
+})();
+
+
   //Grab all the tables on the page with the "stickify" flag class and fix all their row heights.
   let tables = document.querySelectorAll("table.stickify");
-  [].forEach.call(tables, table =>{
-    createScrollBox(table);
-    normalizeRowHeights(table);
-    table.style.visibility = "inherit";
-  });
-})();
+  stickify(tables);
