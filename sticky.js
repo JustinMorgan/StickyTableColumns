@@ -1,46 +1,4 @@
 let stickify = (function() {
-  //Note: Multiple "sticky" columns aren't supported yet, but could be with a few adjustments.
-  //This function assumes exactly one sticky column comprising the first cell of each row,
-  //all having the same width.
-  function createScrollBox(table) {
-    let scroll = table.parentNode;
-
-    //Ignore if there's already a scrollbox present.
-    if (!scroll.classList.contains("scroll")) {
-      //Create a div.scroll wrapper element to be injected around the table.  
-      scroll = document.createElement('div');
-      scroll.classList.add("scroll");
-  
-      //Now we need to offset the scrollable box by the width of the "sticky" column to make sure 
-      //the scrollbar and non-floating cells aren't hidden beneath them. To do that, we have to
-      //calculate the total offsetWidth of the sticky column. 
-      //Since this version supports only one sticky column, we can just use the first cell of the
-      //first row.
-      //NOTE: It's much easier to simply set this value manually in the CSS. This is here to
-      //demonstrate that it can be done dynamically.
-      if (table && table.rows[0] && table.rows[0].cells[0]) {
-        let topRow = table.rows[0];
-        let stickyCell = topRow.cells[0];
-        let stickyWidth = stickyCell.offsetWidth;
-        scroll.style.marginLeft = stickyWidth + "px";
-      }
-
-      //Inject the scrollbox as a wrapper for the table
-      table.parentNode.insertBefore(scroll, table);
-      scroll.appendChild(table);
-    }
-
-    //Now we need an outer shell with position:relative for the floating header to stick to.
-    //Ignore if there's already an outer wrapper.
-    if (!scroll.parentNode.classList.contains("wrap")) {
-      let wrapper = document.createElement('div');
-      wrapper.classList.add("wrap");
-
-      scroll.parentNode.insertBefore(wrapper, scroll);
-      wrapper.appendChild(scroll);
-    }
-  }
-
   //Making the sticky column float in place is easy; we did that with a few lines of CSS. Our problem
   //now is that we've pulled it out of the normal flow by setting position:absolute on it. That means
   //the row won't automatically stretch to match its height, nor will short "sticky cells" stretch to 
@@ -84,6 +42,46 @@ let stickify = (function() {
         cell.style.height = `calc(${rowHeight + 1}px - ${offsets.join(" - ")})`;
       });
     });
+  }
+
+  //Inject inner and outer wrapper divs if they're not already present
+  function createScrollBox(table) {
+    let scroll = table.parentNode;
+
+    if (!scroll.classList.contains("scroll")) {
+      scroll = document.createElement('div');
+      scroll.classList.add("scroll");
+  
+      //Now we need to offset the scrollable box by the width of the "sticky" column to make sure 
+      //the scrollbar and non-floating cells aren't hidden beneath them. To do that, we have to
+      //calculate the total offsetWidth of the sticky column. 
+      //Since this version supports only one sticky column, we can just use the first cell of the
+      //first row.
+      //NOTE: Multiple "sticky" columns aren't supported yet, but could be with a few adjustments.
+      //This function assumes exactly one sticky column comprising the first cell of each row,
+      //all having the same width.
+      //NOTE: It's MUCH easier to just set an explicit width for .scroll in the CSS. This is here 
+      //to demonstrate that it can be done dynamically.
+      if (table && table.rows[0] && table.rows[0].cells[0]) {
+        let topRow = table.rows[0];
+        let stickyCell = topRow.cells[0];
+        let stickyWidth = stickyCell.offsetWidth;
+        scroll.style.marginLeft = stickyWidth + "px";
+      }
+
+      //Inject the scrollbox as a wrapper for the table
+      table.parentNode.insertBefore(scroll, table);
+      scroll.appendChild(table);
+    }
+
+    //Now we inject an outer shell with position:relative for the floating header to stick to.
+    if (!scroll.parentNode.classList.contains("wrap")) {
+      let wrapper = document.createElement('div');
+      wrapper.classList.add("wrap");
+
+      scroll.parentNode.insertBefore(wrapper, scroll);
+      wrapper.appendChild(scroll);
+    }
   }
   
   return function(table) {

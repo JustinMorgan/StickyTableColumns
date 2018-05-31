@@ -14,8 +14,10 @@ column:
   position: relative;
 }
 .scroll {
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: visible;
+  width: fit-content;
+  max-width: 400px; /* default value */
 
   /* will be calculated dynamically in the JS */
   /* margin-left: 141px; */
