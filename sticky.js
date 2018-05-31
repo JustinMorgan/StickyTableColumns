@@ -1,10 +1,4 @@
 let stickify = (function() {
-  //Helper function to wrap an element in another one
-  function wrap(el, wrapper) {
-    el.parentNode.insertBefore(wrapper, el);
-    wrapper.appendChild(el);
-  }
-
   //Note: Multiple "sticky" columns aren't supported yet, but could be with a few adjustments.
   //This function assumes exactly one sticky column comprising the first cell of each row,
   //all having the same width.
@@ -31,7 +25,9 @@ let stickify = (function() {
         scroll.style.marginLeft = stickyWidth + "px";
       }
 
-      wrap(table, scroll);
+      //Inject the scrollbox as a wrapper for the table
+      table.parentNode.insertBefore(scroll, table);
+      scroll.appendChild(table);
     }
 
     //Now we need an outer shell with position:relative for the floating header to stick to.
@@ -39,7 +35,9 @@ let stickify = (function() {
     if (!scroll.parentNode.classList.contains("wrap")) {
       let wrapper = document.createElement('div');
       wrapper.classList.add("wrap");
-      wrap(scroll, wrapper);
+
+      scroll.parentNode.insertBefore(wrapper, scroll);
+      wrapper.appendChild(scroll);
     }
   }
 
@@ -88,16 +86,16 @@ let stickify = (function() {
     });
   }
   
-  return function(tables) {
-    [].forEach.call(tables, table => {
+  return function(table) {
       createScrollBox(table);
       normalizeRowHeights(table);
       table.style.visibility = "inherit";
-    });
   };
 })();
 
 
   //Grab all the tables on the page with the "stickify" flag class and fix all their row heights.
   let tables = document.querySelectorAll("table.stickify");
-  stickify(tables);
+  [].forEach.call(tables, table => {
+    stickify(table);
+  });
