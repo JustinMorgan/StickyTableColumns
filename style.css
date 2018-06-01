@@ -10,22 +10,25 @@ column:
   enable horizontal scrolling, and ensure that the scroll bar
   doesn't extend beneath the floating column
 *************************************************************/    
-.wrap {
+.stickify-wrap {
   position: relative;
 }
-.scroll {
+.stickify-scroll {
   overflow-x: auto;
   overflow-y: visible;
   width: fit-content;
   max-width: 400px; /* default value */
 
-  /* will be calculated dynamically in the JS */
+  /* calculated dynamically, but may be overridden; see JS comments */
   /* margin-left: 141px; */
 }
 table.stickify {
   table-layout: fixed;
   width: 1px;
   visibility: hidden;
+}
+table.stickify.stickified {
+  visibility: unset;
 }
 table.stickify tbody th {
   left: 0;

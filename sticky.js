@@ -46,11 +46,11 @@ let stickify = (function() {
 
   //Inject inner and outer wrapper divs if they're not already present
   function createScrollBox(table) {
-    let scroll = table.parentNode;
+    let scrollBox = table.parentNode;
 
-    if (!scroll.classList.contains("scroll")) {
-      scroll = document.createElement('div');
-      scroll.classList.add("scroll");
+    if (!scrollBox.classList.contains("stickify-scroll")) {
+      scrollBox = document.createElement('div');
+      scrollBox.classList.add("stickify-scroll");
   
       //Now we need to offset the scrollable box by the width of the "sticky" column to make sure 
       //the scrollbar and non-floating cells aren't hidden beneath them. To do that, we have to
@@ -60,34 +60,34 @@ let stickify = (function() {
       //NOTE: Multiple "sticky" columns aren't supported yet, but could be with a few adjustments.
       //This function assumes exactly one sticky column comprising the first cell of each row,
       //all having the same width.
-      //NOTE: It's MUCH easier to just set an explicit width for .scroll in the CSS. This is here 
+      //NOTE: It's MUCH easier to just set an explicit width for .stickify-scroll in the CSS. This is here 
       //to demonstrate that it can be done dynamically.
       if (table && table.rows[0] && table.rows[0].cells[0]) {
         let topRow = table.rows[0];
         let stickyCell = topRow.cells[0];
         let stickyWidth = stickyCell.offsetWidth;
-        scroll.style.marginLeft = stickyWidth + "px";
+        scrollBox.style.marginLeft = stickyWidth + "px";
       }
 
       //Inject the scrollbox as a wrapper for the table
-      table.parentNode.insertBefore(scroll, table);
-      scroll.appendChild(table);
+      table.parentNode.insertBefore(scrollBox, table);
+      scrollBox.appendChild(table);
     }
 
     //Now we inject an outer shell with position:relative for the floating header to stick to.
-    if (!scroll.parentNode.classList.contains("wrap")) {
+    if (!scrollBox.parentNode.classList.contains("stickify-wrap")) {
       let wrapper = document.createElement('div');
-      wrapper.classList.add("wrap");
+      wrapper.classList.add("stickify-wrap");
 
-      scroll.parentNode.insertBefore(wrapper, scroll);
-      wrapper.appendChild(scroll);
+      scrollBox.parentNode.insertBefore(wrapper, scrollBox);
+      wrapper.appendChild(scrollBox);
     }
   }
   
   return function(table) {
       createScrollBox(table);
       normalizeRowHeights(table);
-      table.style.visibility = "inherit";
+      table.classList.add("stickified");
   };
 })();
 
