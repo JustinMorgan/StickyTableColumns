@@ -1,0 +1,38 @@
+/*************************************************************
+CSS portion of "sticky" behavior
+
+This does most of the work in "stickifying" the table's header
+column:
+- Float the cells with position:absolute
+- Offset the remaining cells so they aren't hidden under the 
+  floating column
+- Envelop the non-floating columns in a box of fixed width,
+  enable horizontal scrolling, and ensure that the scroll bar
+  doesn't extend beneath the floating column
+*************************************************************/    
+.stickify-wrap {
+  position: relative;
+}
+.stickify-scroll {
+  overflow-x: auto;
+  overflow-y: visible;
+  width: fit-content;
+  max-width: 400px; /* default value */
+
+  /* calculated dynamically, but may be overridden; see JS comments */
+  /* should be equal to the offsetWidth of the sticky column */
+  /* margin-left: 141px; */
+}
+table.stickify {
+  table-layout: fixed;
+  width: 1px;
+  visibility: hidden;
+}
+table.stickify.stickified {
+  visibility: unset;
+}
+table.stickify tbody th {
+  left: 0;
+  position: absolute;
+  top: auto;
+}
