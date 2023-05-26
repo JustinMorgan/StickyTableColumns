@@ -10,7 +10,7 @@ Note that this is a **proof of concept,** not a general-purpose plugin. It will 
 
 ## Why this is different from all the other "fixed table headers" implementations
 
-The tricky part of this is that the table's auto-stretch behavior is preserved. If a sticky cell is taller than the other cells in the row, the whole row will grow to match it. Otherwise, the sticky cell will grow to match the rest of the row. 
+The tricky part of this is that the auto-stretch behavior of a vanilla HTML table is preserved. If a sticky cell is taller than the other cells in the row, the whole row will grow to match it. Otherwise, the sticky cell will grow to match the rest of the row. 
 
 There are other solutions out there for the sticky-column problem, but as far as I can tell, none of them support dynamic row height. This can be a problem when you don't want to hard-code the row height in advance.
 
