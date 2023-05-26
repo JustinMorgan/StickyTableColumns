@@ -92,11 +92,23 @@ window.stickify = (function () {
   };
 })();
 
-// Grab all the tables on the page with the "stickify" flag class and fix all their row heights.
-document.addEventListener("DOMContentLoaded", function () {
-  const tables = document.querySelectorAll("table.stickify");
+// Automatically stickify all tables with "stickify" in their class list.
+// This lets you stickify your tables declaratively in the HTML instead of manually running the
+// stickify function on them.
+(function () {
+  function documentReady(fn) {
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", fn);
+    } else {
+      fn();
+    }
+  }
 
-  [].forEach.call(tables, table => {
-    stickify(table);
+  documentReady(function () {
+    const tables = document.querySelectorAll("table.stickify");
+  
+    [].forEach.call(tables, table => {
+      stickify(table);
+    });
   });
-});
+})()

@@ -2,28 +2,29 @@
 
 ## Introduction
 
-This is a CSS and vanilla JS implementation of an HTML `table` with a "sticky" (fixed and floating) first column. The horizontal scrollbar starts at the second column, and the "sticky" first column stays in place as the user scrolls through the table.
+This is a CSS and vanilla JS implementation of an HTML `table` with a "sticky" (fixed and floating) first column. The horizontal scrollbar starts at the second column, and the "sticky" first column stays in place as the user scrolls horizontally through the table.
+
+Note that this is a **proof of concept,** not a general-purpose plugin. It will probably need some tweaks before you can use it in your project. I've tried to make it easy to modify if you want more features (e.g. more than one sticky column).
 
 ![screenshot](https://github.com/JustinMorgan/StickyTableColumns/raw/master/screencap.PNG)
 
 ## Why this is different from all the other "fixed table headers" implementations
 
-The tricky part of this is that the table's auto-stretch behavior is preserved. If the "sticky" cell is taller than the rest of the row, the other cells will grow to match it. Otherwise, the "sticky" cell will grow to match the rest of the row. 
+The tricky part of this is that the table's auto-stretch behavior is preserved. If a sticky cell is taller than the other cells in the row, the whole row will grow to match it. Otherwise, the sticky cell will grow to match the rest of the row. 
 
-There are plenty of other solutions available for the sticky-cell problem, but as far as I can tell, none of them support dynamically stretching/shrinking to fit cell content the way vanilla HTML tables do. This can be awkward when you don't want to hard-code the row height in advance.
+There are other solutions out there for the sticky-column problem, but as far as I can tell, none of them support dynamic row height. This can be a problem when you don't want to hard-code the row height in advance.
+
+## How to use this in your project
+
+- Each cell in your table must have an explicit width set in your CSS. This just means you need a `width` setting for `td` and `th`.
+- Include stickify.css and stickify.js in your page.
+- Tag the table(s) you want to stickify with `class="stickify"`.
+- Alternatively, you can manually run the `window.stickify` function on the tables you want to affect.
 
 ## What's in here
 
-There are only two functional pieces here, both in the `StickyTableColumns` subfolder:
+There are only two moving parts here:
 - stickify.css
 - stickify.js
 
-There's also a working example site in the `Example` subfolder, including a sample page and a tiny Express server that does nothing but serve it.
-
-## To use this in your project
-
-- Include stickify.css and stickify.js in your page.
-- Tag the table(s) you want to stickify with `class="stickify"`.
-- The table must have `table-layout:fixed`, so make sure you set an explicit width for `th` and `td` in your table.
-
-Note that **this is just a proof of concept** for the dynamic grow/shrink behavior, not a general-purpose plugin. It will probably need some tweaks before you can use it in your project. I've tried to make it easy to modify if you want more features (e.g. more than one sticky column).
+There's also an `example.html` to show you what it looks like.
